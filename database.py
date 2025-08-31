@@ -11,6 +11,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 def get_db():
+    print("[DEBUG] get_db() called")
     db = SessionLocal()
     try:
         yield db

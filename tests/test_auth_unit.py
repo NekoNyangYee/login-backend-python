@@ -6,6 +6,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def test_verify_password():
+    print("[DEBUG] test_verify_password 실행")
     # 비밀번호 해시 검증 함수 단위 테스트
     raw = "password123"
     hashed = pwd_context.hash(raw)

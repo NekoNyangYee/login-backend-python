@@ -23,6 +23,7 @@ def client():
 
 
 def test_signup_success(client):
+    print("[DEBUG] test_signup_success 실행")
     # 테스트 시작 전 DB에서 동일한 username/email 삭제
     db = next(get_db())
     db.query(User).filter(User.username == "testuser").delete()
