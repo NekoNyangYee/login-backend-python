@@ -19,6 +19,7 @@ def client():
     with TestClient(app) as client:
         yield client
 
+
 def test_signup_success(client):
     # 테스트 시작 전 DB에서 동일한 username/email 삭제
     db = next(get_db())
@@ -32,6 +33,7 @@ def test_signup_success(client):
         "email": "testuser@example.com"
     })
     assert response.status_code == 201
+
 
 def test_signup_duplicate_username(client):
     # 중복 아이디 입력 시 제약조건 위반 에러 반환
@@ -108,6 +110,7 @@ def test_protected_api_with_token(client):
     assert response.status_code == 200
 
 def test_logout_and_block_access(client):
+
     # 로그아웃 후 토큰 무효화 및 접근 차단
     client.post("/signup", json={
         "username": "logoutuser",

@@ -1,4 +1,3 @@
-import pytest
 from utils import verify_password
 from models import User
 from passlib.context import CryptContext
@@ -11,6 +10,7 @@ def test_verify_password():
     hashed = pwd_context.hash(raw)
     assert verify_password(raw, hashed)
     assert not verify_password("wrongpassword", hashed)
+
 
 def test_user_model_fields():
     # User 모델 필드 단위 테스트

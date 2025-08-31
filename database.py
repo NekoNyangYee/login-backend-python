@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker
 
 # 사용자명과 비밀번호를 실제 값으로 변경하세요.
 import os
@@ -14,3 +14,4 @@ def get_db():
         yield db
     finally:
         db.close()
+
