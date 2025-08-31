@@ -37,3 +37,4 @@ black
 fastapi
 uvicorn
 httpx
+pytest-cov
