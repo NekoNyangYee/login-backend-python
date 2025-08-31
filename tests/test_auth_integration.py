@@ -5,6 +5,7 @@ from database import get_db, SQLALCHEMY_DATABASE_URL
 from models import User
 import sqlalchemy
 
+
 @pytest.fixture(autouse=True)
 def cleanup_users_table():
     engine = sqlalchemy.create_engine(SQLALCHEMY_DATABASE_URL)
@@ -13,6 +14,7 @@ def cleanup_users_table():
         conn.execute(sqlalchemy.text("DELETE FROM users"))
         conn.commit()
     yield
+
 
 @pytest.fixture
 def client():
@@ -49,6 +51,7 @@ def test_signup_duplicate_username(client):
     })
     assert response.status_code == 400
 
+
 def test_signup_invalid_input(client):
     # 잘못된 입력(짧은 비밀번호, 잘못된 이메일) 422 반환
     response = client.post("/signup", json={
@@ -57,6 +60,7 @@ def test_signup_invalid_input(client):
         "email": "not-an-email"
     })
     assert response.status_code == 422
+
 
 def test_login_success_and_token(client):
     # /login 정상 플로우: DB 조회, 비밀번호 검증, 토큰 발급
@@ -72,6 +76,7 @@ def test_login_success_and_token(client):
     assert response.status_code == 200
     assert "access_token" in response.json()
 
+
 def test_login_wrong_password(client):
     # 잘못된 비밀번호 401 반환
     client.post("/signup", json={
@@ -85,6 +90,7 @@ def test_login_wrong_password(client):
     })
     assert response.status_code == 401
 
+
 def test_login_user_not_found(client):
     # 없는 아이디 404 반환
     response = client.post("/login", json={
@@ -92,6 +98,7 @@ def test_login_user_not_found(client):
         "password": "password123"
     })
     assert response.status_code == 404
+
 
 def test_protected_api_with_token(client):
     # 로그인 후 토큰으로 보호된 API 접근
@@ -109,9 +116,8 @@ def test_protected_api_with_token(client):
     response = client.get("/profile", headers=headers)
     assert response.status_code == 200
 
+
 def test_logout_and_block_access(client):
-
-
     # 로그아웃 후 토큰 무효화 및 접근 차단
     client.post("/signup", json={
         "username": "logoutuser",

@@ -68,7 +68,11 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
         )
     # 비밀번호 해시
     hashed_pw = pwd_context.hash(req.password)
-    user = User(username=req.username, email=req.email, hashed_password=hashed_pw)
+    user = User(
+        username=req.username,
+        email=req.email,
+        hashed_password=hashed_pw
+    )
     db.add(user)
     db.commit()
     db.refresh(user)
@@ -81,7 +85,10 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     if not pwd_context.verify(req.password, user.hashed_password):
-        raise HTTPException(status_code=401, detail="Wrong password")
+        raise HTTPException(
+            status_code=401,
+            detail="Wrong password"
+        )
     # 실제 서비스에서는 JWT 토큰을 발급해야 함
     return {"access_token": "dummy-token"}
 
