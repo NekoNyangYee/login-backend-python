@@ -57,9 +57,15 @@ class LoginRequest(BaseModel):
 def signup(req: SignupRequest, db: Session = Depends(get_db)):
     # 중복 아이디/이메일 체크
     if db.query(User).filter(User.username == req.username).first():
-        raise HTTPException(status_code=400, detail="Duplicate username")
+        raise HTTPException(
+            status_code=400,
+            detail="Duplicate username"
+        )
     if db.query(User).filter(User.email == req.email).first():
-        raise HTTPException(status_code=400, detail="Duplicate email")
+        raise HTTPException(
+            status_code=400,
+            detail="Duplicate email"
+        )
     # 비밀번호 해시
     hashed_pw = pwd_context.hash(req.password)
     user = User(username=req.username, email=req.email, hashed_password=hashed_pw)

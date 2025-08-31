@@ -111,6 +111,7 @@ def test_protected_api_with_token(client):
 
 def test_logout_and_block_access(client):
 
+
     # 로그아웃 후 토큰 무효화 및 접근 차단
     client.post("/signup", json={
         "username": "logoutuser",
