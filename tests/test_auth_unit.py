@@ -4,12 +4,16 @@ from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+
+
 def test_verify_password():
     # 비밀번호 해시 검증 함수 단위 테스트
     raw = "password123"
     hashed = pwd_context.hash(raw)
     assert verify_password(raw, hashed)
     assert not verify_password("wrongpassword", hashed)
+
+
 
 
 def test_user_model_fields():
@@ -22,3 +26,4 @@ def test_user_model_fields():
     assert user.username == "testuser"
     assert user.email == "test@example.com"
     assert user.hashed_password == "hashedpw"
+

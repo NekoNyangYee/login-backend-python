@@ -84,21 +84,36 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
 def profile(request: Request):
     auth = request.headers.get("authorization")
     if not auth or not auth.startswith("Bearer "):
-        return JSONResponse(content={"message": "Unauthorized"}, status_code=status.HTTP_401_UNAUTHORIZED)
+        return JSONResponse(
+            content={"message": "Unauthorized"},
+            status_code=status.HTTP_401_UNAUTHORIZED
+        )
     token = auth.split(" ")[1]
     if token != "dummy-token" or token in invalid_tokens:
-        return JSONResponse(content={"message": "Unauthorized"}, status_code=status.HTTP_401_UNAUTHORIZED)
-    return JSONResponse(content={"message": "Profile info"}, status_code=status.HTTP_200_OK)
+        return JSONResponse(
+            content={"message": "Unauthorized"},
+            status_code=status.HTTP_401_UNAUTHORIZED
+        )
+    return JSONResponse(
+        content={"message": "Profile info"},
+        status_code=status.HTTP_200_OK
+    )
 
 
 @app.post("/logout")
 def logout(request: Request):
     auth = request.headers.get("authorization")
     if not auth or not auth.startswith("Bearer "):
-        return JSONResponse(content={"message": "Unauthorized"}, status_code=status.HTTP_401_UNAUTHORIZED)
+        return JSONResponse(
+            content={"message": "Unauthorized"},
+            status_code=status.HTTP_401_UNAUTHORIZED
+        )
     token = auth.split(" ")[1]
     invalid_tokens.add(token)
-    return JSONResponse(content={"message": "Logout successful"}, status_code=status.HTTP_200_OK)
+    return JSONResponse(
+        content={"message": "Logout successful"},
+        status_code=status.HTTP_200_OK
+    )
 
 
 # 테스트/앱 시작 시 테이블 자동 생성
