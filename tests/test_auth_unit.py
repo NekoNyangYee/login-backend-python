@@ -16,9 +16,7 @@ def test_verify_password():
 def test_user_model_fields():
     # User 모델 필드 단위 테스트
     user = User(
-        username="testuser",
-        email="test@example.com",
-        hashed_password="hashedpw"
+        username="testuser", email="test@example.com", hashed_password="hashedpw"
     )
     assert user.username == "testuser"
     assert user.email == "test@example.com"

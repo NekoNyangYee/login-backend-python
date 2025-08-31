@@ -57,22 +57,12 @@ class LoginRequest(BaseModel):
 def signup(req: SignupRequest, db: Session = Depends(get_db)):
     # 중복 아이디/이메일 체크
     if db.query(User).filter(User.username == req.username).first():
-        raise HTTPException(
-            status_code=400,
-            detail="Duplicate username"
-        )
+        raise HTTPException(status_code=400, detail="Duplicate username")
     if db.query(User).filter(User.email == req.email).first():
-        raise HTTPException(
-            status_code=400,
-            detail="Duplicate email"
-        )
+        raise HTTPException(status_code=400, detail="Duplicate email")
     # 비밀번호 해시
     hashed_pw = pwd_context.hash(req.password)
-    user = User(
-        username=req.username,
-        email=req.email,
-        hashed_password=hashed_pw
-    )
+    user = User(username=req.username, email=req.email, hashed_password=hashed_pw)
     db.add(user)
     db.commit()
     db.refresh(user)
@@ -85,10 +75,7 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     if not pwd_context.verify(req.password, user.hashed_password):
-        raise HTTPException(
-            status_code=401,
-            detail="Wrong password"
-        )
+        raise HTTPException(status_code=401, detail="Wrong password")
     # 실제 서비스에서는 JWT 토큰을 발급해야 함
     return {"access_token": "dummy-token"}
 
@@ -99,17 +86,16 @@ def profile(request: Request):
     if not auth or not auth.startswith("Bearer "):
         return JSONResponse(
             content={"message": "Unauthorized"},
-            status_code=status.HTTP_401_UNAUTHORIZED
+            status_code=status.HTTP_401_UNAUTHORIZED,
         )
     token = auth.split(" ")[1]
     if token != "dummy-token" or token in invalid_tokens:
         return JSONResponse(
             content={"message": "Unauthorized"},
-            status_code=status.HTTP_401_UNAUTHORIZED
+            status_code=status.HTTP_401_UNAUTHORIZED,
         )
     return JSONResponse(
-        content={"message": "Profile info"},
-        status_code=status.HTTP_200_OK
+        content={"message": "Profile info"}, status_code=status.HTTP_200_OK
     )
 
 
@@ -119,13 +105,12 @@ def logout(request: Request):
     if not auth or not auth.startswith("Bearer "):
         return JSONResponse(
             content={"message": "Unauthorized"},
-            status_code=status.HTTP_401_UNAUTHORIZED
+            status_code=status.HTTP_401_UNAUTHORIZED,
         )
     token = auth.split(" ")[1]
     invalid_tokens.add(token)
     return JSONResponse(
-        content={"message": "Logout successful"},
-        status_code=status.HTTP_200_OK
+        content={"message": "Logout successful"}, status_code=status.HTTP_200_OK
     )
 
 
