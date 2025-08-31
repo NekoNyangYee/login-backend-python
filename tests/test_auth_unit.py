@@ -23,4 +23,3 @@ def test_user_model_fields():
     assert user.username == "testuser"
     assert user.email == "test@example.com"
     assert user.hashed_password == "hashedpw"
-
