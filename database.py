@@ -5,7 +5,9 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 DB_HOST = os.getenv("DB_HOST", "localhost")
-SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://root:1111@{DB_HOST}:3306/my_login_db"
+SQLALCHEMY_DATABASE_URL = (
+    f"mysql+pymysql://root:1111@{DB_HOST}:3306/my_login_db"
+)
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

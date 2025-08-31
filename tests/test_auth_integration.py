@@ -82,7 +82,8 @@ def test_login_success_and_token(client):
         },
     )
     response = client.post(
-        "/login", json={"username": "loginuser", "password": "password123"}
+        "/login",
+        json={"username": "loginuser", "password": "password123"}
     )
     assert response.status_code == 200
     assert "access_token" in response.json()

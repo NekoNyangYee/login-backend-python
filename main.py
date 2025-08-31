@@ -63,7 +63,11 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Duplicate email")
     # 비밀번호 해시
     hashed_pw = pwd_context.hash(req.password)
-    user = User(username=req.username, email=req.email, hashed_password=hashed_pw)
+    user = User(
+        username=req.username,
+        email=req.email,
+        hashed_password=hashed_pw
+    )
     db.add(user)
     db.commit()
     db.refresh(user)
@@ -96,7 +100,8 @@ def profile(request: Request):
             status_code=status.HTTP_401_UNAUTHORIZED,
         )
     return JSONResponse(
-        content={"message": "Profile info"}, status_code=status.HTTP_200_OK
+        content={"message": "Profile info"},
+        status_code=status.HTTP_200_OK
     )
 
 
