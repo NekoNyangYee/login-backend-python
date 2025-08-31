@@ -19,7 +19,6 @@ class User(Base):
     email = Column(String(255), unique=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
 
-
 class Login(Base):
     __tablename__ = "logins"
     id = Column(Integer, primary_key=True)
