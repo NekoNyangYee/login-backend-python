@@ -66,7 +66,11 @@ def test_signup_invalid_input(client):
     # 잘못된 입력(짧은 비밀번호, 잘못된 이메일) 422 반환
     response = client.post(
         "/signup",
-        json={"username": "baduser", "password": "pw", "email": "not-an-email"},
+        json={
+            "username": "baduser",
+            "password": "pw",
+            "email": "not-an-email"
+        }
     )
     assert response.status_code == 422
 
@@ -83,7 +87,10 @@ def test_login_success_and_token(client):
     )
     response = client.post(
         "/login",
-        json={"username": "loginuser", "password": "password123"}
+        json={
+            "username": "loginuser",
+            "password": "password123"
+        }
     )
     assert response.status_code == 200
     assert "access_token" in response.json()

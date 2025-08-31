@@ -116,7 +116,8 @@ def logout(request: Request):
     token = auth.split(" ")[1]
     invalid_tokens.add(token)
     return JSONResponse(
-        content={"message": "Logout successful"}, status_code=status.HTTP_200_OK
+        content={"message": "Logout successful"},
+        status_code=status.HTTP_200_OK
     )
 
 
