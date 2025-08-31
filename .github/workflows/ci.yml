@@ -17,7 +17,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: 1111
           MYSQL_DATABASE: my_login_db
         ports:
-          - 3306:3306
+          - 3306
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
