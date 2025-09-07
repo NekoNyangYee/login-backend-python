@@ -14,8 +14,8 @@ jobs:
       mariadb:
         image: mariadb:12.0.2
         env:
-          MYSQL_ROOT_PASSWORD: 1111
-          MYSQL_DATABASE: my_login_db
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
         ports:
           - 3306:3306
   # healthcheck 옵션 제거 (컨테이너가 바로 뜨도록)
