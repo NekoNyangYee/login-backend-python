@@ -6,9 +6,19 @@ from models import MsgPayload, User, Base
 from pydantic import BaseModel, EmailStr
 from passlib.context import CryptContext
 from database import engine
+from fastapi.middleware.cors import CORSMiddleware  # ← CORS 미들웨어 import 추가
 
 app = FastAPI()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# CORS 미들웨어 추가
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # 또는 ["*"]로 전체 허용
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 messages_list: dict[int, MsgPayload] = {}
 users_db = {}
